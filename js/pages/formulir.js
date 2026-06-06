@@ -362,16 +362,27 @@ async function generateRPM() {
     return;
   }
 
-  if (!Store.getApiKey()) {
-    showToast('API Key Gemini belum diatur! Silakan isi di halaman Pengaturan.', 'danger');
-    return;
-  }
-
   // Show loading
   document.getElementById('loadingOverlay').classList.remove('d-none');
 
   try {
-    const content = await Gemini.generate(formData);
+    let content;
+    const hasApiKey = !!Store.getApiKey();
+
+    if (hasApiKey) {
+      // Coba generate via Gemini AI
+      try {
+        content = await Gemini.generate(formData);
+      } catch (aiError) {
+        // Kalau AI gagal (rate limit, dll), fallback ke template
+        console.warn('AI generate gagal, pakai template:', aiError.message);
+        content = Template.generate(formData);
+        showToast('AI tidak tersedia (quota habis), menggunakan mode template.', 'info');
+      }
+    } else {
+      // Tidak ada API key, langsung pakai template
+      content = Template.generate(formData);
+    }
 
     // Save result
     const resultItem = {

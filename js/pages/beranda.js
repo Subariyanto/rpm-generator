@@ -22,11 +22,12 @@ function renderBeranda() {
     </div>
 
     ${!hasApiKey ? `
-    <div class="alert alert-warning d-flex align-items-center mb-4" role="alert">
-      <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i>
+    <div class="alert alert-info d-flex align-items-center mb-4" role="alert">
+      <i class="bi bi-info-circle-fill me-2 fs-5"></i>
       <div>
-        <strong>API Key belum diatur!</strong> Silakan masukkan API Key Gemini di 
-        <a href="#/pengaturan" class="alert-link">halaman Pengaturan</a> untuk mulai generate RPM.
+        <strong>Mode Template aktif.</strong> RPM akan di-generate dari template terstruktur. 
+        Untuk hasil berbasis AI, masukkan API Key Gemini di 
+        <a href="#/pengaturan" class="alert-link">halaman Pengaturan</a>.
       </div>
     </div>
     ` : ''}
