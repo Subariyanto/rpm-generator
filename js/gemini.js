@@ -1,7 +1,7 @@
 // gemini.js - Gemini API integration
 
 const Gemini = {
-  API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
+  API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',
 
   async generate(formData) {
     const apiKey = Store.getApiKey();
