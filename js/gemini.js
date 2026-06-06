@@ -1,7 +1,11 @@
 // gemini.js - Gemini API integration
 
 const Gemini = {
-  API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
+  MODELS: [
+    'gemini-2.0-flash',
+    'gemini-2.0-flash-lite'
+  ],
+  BASE_URL: 'https://generativelanguage.googleapis.com/v1beta/models/',
 
   async generate(formData) {
     const apiKey = Store.getApiKey();
@@ -11,7 +15,37 @@ const Gemini = {
 
     const prompt = this.buildPrompt(formData);
 
-    const response = await fetch(`${this.API_URL}?key=${apiKey}`, {
+    // Try each model with retry
+    for (const model of this.MODELS) {
+      try {
+        const result = await this._callModel(model, apiKey, prompt);
+        return result;
+      } catch (err) {
+        // If rate limited or model issue, try next model
+        if (err.status === 429 || err.status === 404) {
+          console.warn(`Model ${model} gagal (${err.status}), mencoba model berikutnya...`);
+          continue;
+        }
+        throw err;
+      }
+    }
+
+    // All models failed — wait and retry once with first model
+    await new Promise(r => setTimeout(r, 3000));
+    try {
+      return await this._callModel(this.MODELS[0], apiKey, prompt);
+    } catch (err) {
+      if (err.status === 429) {
+        throw new Error('Kuota API habis. Silakan tunggu 1-2 menit lalu coba lagi, atau cek kuota di Google AI Studio.');
+      }
+      throw err;
+    }
+  },
+
+  async _callModel(model, apiKey, prompt) {
+    const url = `${this.BASE_URL}${model}:generateContent?key=${apiKey}`;
+
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -31,13 +65,15 @@ const Gemini = {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       if (response.status === 400) {
-        throw new Error('Request tidak valid. Periksa kembali data input Anda.');
+        throw Object.assign(new Error('Request tidak valid. Periksa kembali data input Anda.'), {status: 400});
       } else if (response.status === 401 || response.status === 403) {
-        throw new Error('API Key tidak valid atau tidak memiliki akses. Periksa kembali API Key Anda di Pengaturan.');
+        throw Object.assign(new Error('API Key tidak valid atau tidak memiliki akses. Periksa kembali API Key Anda di Pengaturan.'), {status: response.status});
       } else if (response.status === 429) {
-        throw new Error('Terlalu banyak request. Silakan tunggu beberapa saat dan coba lagi.');
+        throw Object.assign(new Error('Terlalu banyak request. Silakan tunggu beberapa saat dan coba lagi.'), {status: 429});
+      } else if (response.status === 404) {
+        throw Object.assign(new Error(`Model ${model} tidak ditemukan.`), {status: 404});
       } else {
-        throw new Error(`Error dari Gemini API: ${errorData.error?.message || response.statusText}`);
+        throw Object.assign(new Error(`Error dari Gemini API: ${errorData.error?.message || response.statusText}`), {status: response.status});
       }
     }
 
