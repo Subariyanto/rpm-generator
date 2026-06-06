@@ -48,7 +48,7 @@ function renderBeranda() {
 
     <div class="row g-3 mb-4">
       <div class="col-md-4">
-        <div class="card quick-action-btn" onclick="Store.clearFormData(); window.location.hash='#/formulir'">
+        <div class="card quick-action-btn" onclick="window._newRPM=true; Store.clearFormData(); window.location.hash='#/formulir'; if(window.location.hash==='#/formulir'){App.navigate();}">
           <i class="bi bi-plus-circle"></i>
           <strong>Buat RPM Baru</strong>
           <small class="text-muted d-block mt-1">Isi formulir & generate</small>
@@ -76,16 +76,13 @@ function renderBeranda() {
         <strong>Generator RPM v1.0</strong> adalah aplikasi berbasis AI untuk membantu guru madrasah 
         menyusun Rencana Pembelajaran Mendalam (RPM) secara otomatis dan terstruktur.
       </p>
-      <ul class="mb-2">
+      <ul class="mb-0">
         <li>Menggunakan Google Gemini AI untuk generate konten RPM</li>
         <li>Format sesuai standar kurikulum madrasah terbaru</li>
         <li>Integrasi 8 Dimensi Profil Lulusan & Panca Cinta</li>
         <li>Mendukung model Pembelajaran Mendalam (Deep Learning)</li>
         <li>Export ke DOCX & cetak langsung</li>
       </ul>
-      <p class="mb-0 text-muted small">
-        <i class="bi bi-person-circle me-1"></i>Referensi: Ahmad Bashir, Pengawas Kemenag Kota Tangerang
-      </p>
     </div>
   `;
 }

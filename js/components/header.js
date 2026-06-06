@@ -26,6 +26,7 @@ function renderHeader() {
           <span class="brand-icon">📚✨</span>
           Generator RPM
         </a>
+        <span class="navbar-text text-white-50 d-none d-md-inline ms-2 small">Dibuat oleh: Subariyanto</span>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>

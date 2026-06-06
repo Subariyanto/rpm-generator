@@ -58,8 +58,13 @@ const DATA_CONTOH = {
 };
 
 function renderFormulir() {
+  // Jika ada flag newRPM, kosongkan form data
+  if (window._newRPM) {
+    Store.clearFormData();
+    window._newRPM = false;
+  }
   const saved = Store.getFormData();
-  const d = { ...DATA_CONTOH, ...saved };
+  const d = saved && Object.keys(saved).length > 0 ? saved : {};
 
   document.getElementById('app-content').innerHTML = `
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
