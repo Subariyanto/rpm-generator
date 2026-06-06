@@ -31,12 +31,15 @@ const Gemini = {
     }
 
     // All models failed — wait and retry once with first model
-    await new Promise(r => setTimeout(r, 3000));
+    await new Promise(r => setTimeout(r, 5000));
     try {
       return await this._callModel(this.MODELS[0], apiKey, prompt);
     } catch (err) {
       if (err.status === 429) {
-        throw new Error('Kuota API habis. Silakan tunggu 1-2 menit lalu coba lagi, atau cek kuota di Google AI Studio.');
+        throw new Error('Kuota API habis sementara (rate limit). Tunggu 1-2 menit lalu coba lagi. Tips: buat API Key baru di project berbeda jika terus gagal.');
+      }
+      if (err.status === 403) {
+        throw new Error('API Key tidak punya akses. Pastikan Generative Language API sudah diaktifkan di Google Cloud Console project Anda.');
       }
       throw err;
     }
