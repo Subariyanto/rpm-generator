@@ -58,8 +58,8 @@ const Gemini = {
       modelDetail += `  - Pertemuan ${i + 1}: ${model}\n`;
     }
 
-    const p3 = (d.profil_pelajar || []).join(', ');
-    const kbc = (d.tema_kbc || []).join(', ');
+    const profil = (d.profil_lulusan || d.profil_pelajar || []).join(', ');
+    const panca = (d.panca_cinta || d.tema_kbc || []).join(', ');
 
     return `Anda adalah seorang ahli pendidikan di Madrasah yang sangat berpengalaman dalam menyusun Rencana Pembelajaran Mendalam (RPM) sesuai kurikulum terbaru. Buatkan RPM yang lengkap dan detail berdasarkan data berikut:
 
@@ -87,11 +87,11 @@ const Gemini = {
 **Model Pembelajaran per Pertemuan:**
 ${modelDetail}
 
-**Profil Pelajar Pancasila yang Ditargetkan:**
-${p3 || '-'}
+**8 Dimensi Profil Lulusan yang Ditargetkan:**
+${profil || '-'}
 
-**Tema KBC (Khas Budaya Cinta):**
-${kbc || '-'}
+**Panca Cinta:**
+${panca || '-'}
 
 **Materi Insersi KBC/Adab:**
 ${d.materi_insersi_kbc || '-'}
@@ -103,13 +103,13 @@ Buatkan RPM dengan format resmi dan lengkap yang mencakup:
 1. **IDENTITAS** - tabel berisi identitas madrasah, mapel, kelas, semester, alokasi waktu, guru pengajar, kepala madrasah
 2. **CAPAIAN PEMBELAJARAN (CP)** - sesuai input
 3. **TUJUAN PEMBELAJARAN (TP)** - sesuai input, diperjelas jika perlu
-4. **PROFIL PELAJAR PANCASILA** - dimensi yang ditargetkan beserta indikatornya
+4. **8 DIMENSI PROFIL LULUSAN** - dimensi yang ditargetkan beserta indikatornya
 5. **MATERI PEMBELAJARAN**
    - Materi Reguler (sesuai CP/TP)
    - Materi Insersi KBC/Adab
 6. **LANGKAH-LANGKAH PEMBELAJARAN MENDALAM (DEEP LEARNING)** - untuk setiap pertemuan:
    - **Pendahuluan** (±15 menit): salam, motivasi, apersepsi, penyampaian tujuan
-   - **Kegiatan Inti** (sesuai alokasi): menggunakan model pembelajaran yang ditentukan, dengan tahapan yang jelas dan detail, integrasi Profil Pelajar Pancasila, sisipan KBC/Adab
+   - **Kegiatan Inti** (sesuai alokasi): menggunakan model pembelajaran yang ditentukan, dengan tahapan yang jelas dan detail, integrasi 8 Dimensi Profil Lulusan, sisipan Panca Cinta/Adab
    - **Penutup** (±15 menit): refleksi, kesimpulan, tindak lanjut, doa
 7. **ASESMEN**
    - Asesmen Formatif (proses): teknik, instrumen

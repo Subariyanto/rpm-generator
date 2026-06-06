@@ -48,7 +48,7 @@ function renderBeranda() {
 
     <div class="row g-3 mb-4">
       <div class="col-md-4">
-        <div class="card quick-action-btn" onclick="window.location.hash='#/formulir'">
+        <div class="card quick-action-btn" onclick="Store.clearFormData(); window.location.hash='#/formulir'">
           <i class="bi bi-plus-circle"></i>
           <strong>Buat RPM Baru</strong>
           <small class="text-muted d-block mt-1">Isi formulir & generate</small>
@@ -79,7 +79,7 @@ function renderBeranda() {
       <ul class="mb-2">
         <li>Menggunakan Google Gemini AI untuk generate konten RPM</li>
         <li>Format sesuai standar kurikulum madrasah terbaru</li>
-        <li>Integrasi Profil Pelajar Pancasila & KBC (Khas Budaya Cinta)</li>
+        <li>Integrasi 8 Dimensi Profil Lulusan & Panca Cinta</li>
         <li>Mendukung model Pembelajaran Mendalam (Deep Learning)</li>
         <li>Export ke DOCX & cetak langsung</li>
       </ul>

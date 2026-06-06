@@ -16,20 +16,22 @@ const MODEL_PEMBELAJARAN = [
   'Contextual Teaching and Learning'
 ];
 
-const PROFIL_PELAJAR = [
-  'Beriman, Bertakwa kepada Tuhan YME, dan Berakhlak Mulia',
-  'Berkebinekaan Global',
-  'Bergotong-royong',
-  'Mandiri',
-  'Bernalar Kritis',
-  'Kreatif'
+const PROFIL_LULUSAN = [
+  'Keimanan dan Ketakwaan terhadap Tuhan YME',
+  'Kewargaan',
+  'Penalaran Kritis',
+  'Kreativitas',
+  'Kolaborasi',
+  'Kemandirian',
+  'Kesehatan',
+  'Komunikasi'
 ];
 
-const TEMA_KBC = [
-  'Cinta Allah & Rasul-Nya',
+const PANCA_CINTA = [
+  'Cinta Kepada Allah dan Rasul-Nya',
   'Cinta Ilmu',
+  'Cinta Diri dan Sesama',
   'Cinta Lingkungan',
-  'Cinta Diri & Sesama Manusia',
   'Cinta Tanah Air'
 ];
 
@@ -49,8 +51,8 @@ const DATA_CONTOH = {
   capaian_pembelajaran: 'Peserta didik mampu memahami dan mempraktikkan tata cara bersuci (thaharah) sesuai dengan ketentuan syariat Islam, termasuk wudhu, tayammum, dan mandi wajib.',
   tujuan_pembelajaran: '1. Peserta didik dapat menjelaskan pengertian dan hikmah bersuci dalam Islam\n2. Peserta didik dapat menyebutkan macam-macam najis dan cara mensucikannya\n3. Peserta didik dapat mendemonstrasikan tata cara wudhu dengan benar\n4. Peserta didik dapat menjelaskan hal-hal yang membatalkan wudhu',
   materi_utama: 'Thaharah (Bersuci): Pengertian thaharah, macam-macam najis, tata cara wudhu, hal yang membatalkan wudhu, tayammum',
-  profil_pelajar: ['Beriman, Bertakwa kepada Tuhan YME, dan Berakhlak Mulia', 'Mandiri', 'Bernalar Kritis'],
-  tema_kbc: ['Cinta Allah & Rasul-Nya', 'Cinta Diri & Sesama Manusia'],
+  profil_lulusan: ['Keimanan dan Ketakwaan terhadap Tuhan YME', 'Kemandirian', 'Penalaran Kritis'],
+  panca_cinta: ['Cinta Kepada Allah dan Rasul-Nya', 'Cinta Diri dan Sesama'],
   materi_insersi_kbc: 'Mengaitkan kebersihan sebagai bagian dari iman (an-nazhaafatu minal iman). Menanamkan rasa cinta kepada Allah melalui ibadah yang dimulai dengan bersuci. Adab menjaga kebersihan diri dan lingkungan sebagai bentuk syukur.',
   model_pertemuan: ['Inkuiri-Discovery Learning', 'Cooperative Learning', 'Experiential Learning ARKA', 'Problem Based Learning']
 };
@@ -169,33 +171,33 @@ function renderFormulir() {
         <div id="modelPertemuanContainer"></div>
       </div>
 
-      <!-- Profil Pelajar Pancasila -->
+      <!-- 8 Dimensi Profil Lulusan -->
       <div class="form-section">
-        <h5 class="form-section-title"><i class="bi bi-star me-2"></i>Profil Pelajar Pancasila</h5>
+        <h5 class="form-section-title"><i class="bi bi-star me-2"></i>8 Dimensi Profil Lulusan</h5>
         <p class="text-muted small">Pilih dimensi yang ditargetkan:</p>
         <div class="row g-2">
-          ${PROFIL_PELAJAR.map((p, i) => `
+          ${PROFIL_LULUSAN.map((p, i) => `
             <div class="col-md-6">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="pp_${i}" value="${p}" 
-                  ${(d.profil_pelajar || []).includes(p) ? 'checked' : ''}>
-                <label class="form-check-label" for="pp_${i}">${p}</label>
+                <input class="form-check-input" type="checkbox" id="pl_${i}" value="${p}" 
+                  ${(d.profil_lulusan || []).includes(p) ? 'checked' : ''}>
+                <label class="form-check-label" for="pl_${i}">${p}</label>
               </div>
             </div>
           `).join('')}
         </div>
       </div>
 
-      <!-- Tema KBC -->
+      <!-- Panca Cinta -->
       <div class="form-section">
-        <h5 class="form-section-title"><i class="bi bi-heart me-2"></i>Tema KBC (Khas Budaya Cinta)</h5>
+        <h5 class="form-section-title"><i class="bi bi-heart me-2"></i>Panca Cinta</h5>
         <div class="row g-2">
-          ${TEMA_KBC.map((t, i) => `
+          ${PANCA_CINTA.map((t, i) => `
             <div class="col-md-6">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="kbc_${i}" value="${t}"
-                  ${(d.tema_kbc || []).includes(t) ? 'checked' : ''}>
-                <label class="form-check-label" for="kbc_${i}">${t}</label>
+                <input class="form-check-input" type="checkbox" id="pc_${i}" value="${t}"
+                  ${(d.panca_cinta || []).includes(t) ? 'checked' : ''}>
+                <label class="form-check-label" for="pc_${i}">${t}</label>
               </div>
             </div>
           `).join('')}
@@ -304,13 +306,13 @@ function updateModelPertemuan(count, saved) {
 
 function getFormValues() {
   const profil = [];
-  PROFIL_PELAJAR.forEach((p, i) => {
-    if (document.getElementById(`pp_${i}`)?.checked) profil.push(p);
+  PROFIL_LULUSAN.forEach((p, i) => {
+    if (document.getElementById(`pl_${i}`)?.checked) profil.push(p);
   });
 
   const kbc = [];
-  TEMA_KBC.forEach((t, i) => {
-    if (document.getElementById(`kbc_${i}`)?.checked) kbc.push(t);
+  PANCA_CINTA.forEach((t, i) => {
+    if (document.getElementById(`pc_${i}`)?.checked) kbc.push(t);
   });
 
   const modelPertemuan = [];
@@ -334,8 +336,8 @@ function getFormValues() {
     capaian_pembelajaran: document.getElementById('capaian_pembelajaran')?.value || '',
     tujuan_pembelajaran: document.getElementById('tujuan_pembelajaran')?.value || '',
     materi_utama: document.getElementById('materi_utama')?.value || '',
-    profil_pelajar: profil,
-    tema_kbc: kbc,
+    profil_lulusan: profil,
+    panca_cinta: kbc,
     materi_insersi_kbc: document.getElementById('materi_insersi_kbc')?.value || '',
     model_pertemuan: modelPertemuan
   };
